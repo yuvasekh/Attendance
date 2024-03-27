@@ -11,6 +11,7 @@ import { Layout, Menu, Button, theme } from 'antd';
 import {  Drawer, Radio, Space } from 'antd';
 import { Route, Routes, Navigate,Link } from "react-router-dom";
 import Login from '../login/login';
+import { MenuIcon } from 'lucide-react';
 const { Header, Sider, Content } = Layout;
 const LayoutApp = ({ children }) => {
   console.log("called")
@@ -65,49 +66,72 @@ const LayoutApp = ({ children }) => {
           ]}
         />
       </Drawer>
-      <Sider trigger={null} collapsible collapsed={collapsed} className={!collapsed ? "hidden sm:hidden md:flex" : "hidden sm:hidden md:hidden lg:hidden"}>
+      <Sider trigger={null} collapsible collapsed={collapsed} className={!collapsed ? " hidden sm:hidden md:flex md:bg-gridcolor"  : "hidden sm:hidden md:hidden lg:hidden"}>
 
         <div className="demo-logo-vertical" />
         <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: <Link to="/test"/>,
-              icon: <UserOutlined />,
-              label: <Link to="/get">Attedance</Link>,
-            },
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label: <Link to="/attendance">Attendance Register</Link>,
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: <Link to="/">DashBoard</Link>,
-            },
-            {
-              key: '4',
-              icon: <UploadOutlined />,
-              label: <Link to="/addcourse">Add Course</Link>,
-            },
-          ]}
-        />
+  theme="dark"
+  mode="inline"
+  defaultSelectedKeys={['1']}
+  items={[
+    {
+      key: '1',
+      icon: <UserOutlined />,
+      label: <Link to="/get">Attendance</Link>,
+    },
+    {
+      key: '2',
+      icon: <VideoCameraOutlined />,
+      label: <Link to="/attendance">Attendance Register</Link>,
+    },
+    {
+      key: '3',
+      icon: <UploadOutlined />,
+      label: <Link to="/">Dashboard</Link>,
+    },
+    {
+      key: '4',
+      icon: <UploadOutlined />,
+      label: <Link to="/addcourse">Add Course</Link>,
+    },
+    {
+      key: '5',
+      icon: <UploadOutlined />,
+      label: <Link to="/studentsList">Students List</Link>,
+    },
+    {
+      key: '6',
+      icon: <UploadOutlined />,
+      label: <Link to="/selectcourse">Select Course</Link>,
+    },
+    {
+      key: '7',
+      icon: <UploadOutlined />,
+      label: <Link to="/coursesList">Courses List</Link>,
+    },
+    {
+      key: '8',
+      icon: <UploadOutlined />,
+      label: <Link to="/studentregistration">Student Registration</Link>,
+    },
+  ]}
+/>
+
       </Sider>
       <Layout>
         <Header
           style={{
-            padding: 0,
-            background: colorBgContainer,
+            padding: 10,
+            background: '#213547',
           }}
+      
+
         >
-            <div className='flex justify-start items-center m-[20px] gap-[20px] sm:gap-[450px] md:gap-[250px] lg:gap-[250px]'>
+            <div className='flex justify-start items-center text-[white] font-medium text-lg gap-[20px] sm:gap-[450px] md:gap-[250px] lg:gap-[250px]'>
            
           <Button
             type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            icon={collapsed ? <MenuIcon /> :<MenuIcon />}
             onClick={() => setCollapsed(!collapsed)}
             style={{
               fontSize: '16px',
@@ -116,25 +140,27 @@ const LayoutApp = ({ children }) => {
               alignItems:'center',
               alignContent:'center',
               float:'left',
-              justifyContent:'center'
-
+              justifyContent:'center',
+background:'white'
             }} className="hidden md:flex lg:flex sm:hidden "
           ></Button>
           
-            <Button type="primary" onClick={showDrawer}   style={{
+            <Button type="primary" onClick={showDrawer}    style={{
               fontSize: '16px',
-              width: 34,
-              height: 34,
+              width: 44,
+              height: 44,
               alignItems:'center',
               alignContent:'center',
-          justifyContent:'center'
-
-            }}  icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}     className="flex sm:flex md:hidden lg:hidden bg-miracle-blue ">
+              float:'left',
+              justifyContent:'center',
+background:'white',
+color:'black'
+            }} icon={collapsed ? <MenuIcon /> : <MenuIcon />}     className="flex sm:flex md:hidden lg:hidden bg-miracle-blue ">
          
         </Button>
         
 
-<h1 style={{textAlign:'center'}}>Student Attendance ManageMent System</h1>
+<h1 style={{textAlign:'center '}}>Student Attendance ManageMent System</h1>
             </div>
    
          
@@ -150,7 +176,7 @@ const LayoutApp = ({ children }) => {
             justifyContent:'center'
           }}
         >
-                <div className="w-[90vw] h-[92vh] bg-white   ">
+                <div className="w-[90vw] h-[92vh] bg-white justify-center ">
           {children}
         </div>
 

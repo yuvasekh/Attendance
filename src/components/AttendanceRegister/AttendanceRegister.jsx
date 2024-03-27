@@ -45,7 +45,15 @@ const AttendanceTable = ({ data }) => {
     console.log(res)
     let temp=students
     temp.forEach(student => {
-        student.semester = 1;
+        if(semester=="semester1")
+        {
+            student.semester = 1;
+        }
+        else
+        {
+            student.semester = 2;
+        }
+        
     });
     var res=await addattendance(temp[0])
     console.log('Attendance Submitted:', students);
