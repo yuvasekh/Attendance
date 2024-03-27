@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Radio } from 'antd';
 
-const AttendanceTable = ({ data }) => {
+const GetAttendance = ({ data }) => {
   const [attendance, setAttendance] = useState([
     { id: 1, name: 'Student 1', status: 'present' },
     { id: 2, name: 'Student 2', status: 'absent' },
@@ -38,14 +38,8 @@ const AttendanceTable = ({ data }) => {
   ];
 
   return (
-    <Table
-      dataSource={attendance}
-      columns={columns}
-      pagination={false}
-      bordered
-      responsive
-    />
+    <h1>Get Attendance</h1>
   );
 };
 
-export default AttendanceTable;
+export default GetAttendance;

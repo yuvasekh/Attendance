@@ -22,7 +22,10 @@ body {
 
 }
 
-
+.ant-form-item-label
+{
+  color: white !important;
+}
 
 @media (prefers-color-scheme: light) {
   :root {

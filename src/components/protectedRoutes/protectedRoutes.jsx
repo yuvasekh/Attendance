@@ -1,27 +1,25 @@
 import { Navigate, Outlet } from "react-router-dom";
-
+import LayoutApp from "../layout/Layout";
 import { useState } from "react";
 
 
 const PrivateRoutes = () => {
-  const [isLoggedin, setlogin] = useState(false);
-
-
-
+  const [isLoggedIn, setLoggedIn] = useState(true);
+console.log(isLoggedIn)
   const RedirectLogin = () => {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   };
+
   return (
     <div>
-    
-        {isLoggedin ? (
-          <Applayout>
-            <Outlet />
-          </Applayout>
-        ) : (
-          <RedirectLogin />
-        )}
-   
+      {isLoggedIn ? (
+        <LayoutApp>
+        
+          <Outlet />
+        </LayoutApp>
+      ) : (
+        <RedirectLogin />
+      )}
     </div>
   );
 };

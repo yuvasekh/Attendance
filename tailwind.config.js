@@ -9,6 +9,7 @@ export default {
       },
       height: {
         "screen/90": "90vh",
+        "screen/80": "80vh",
         "screen/50": "50vh",
         "screen/60": "60vh",
         "screen/40": "40vh",
@@ -29,6 +30,7 @@ export default {
         "miracle-dr-blue": "#0d416b",
         "miracle-blue": "#00aae7",
         "miracle-black": "#232527",
+        "gridcolor":"#213547"
       },
       backgroundImage:
       {
