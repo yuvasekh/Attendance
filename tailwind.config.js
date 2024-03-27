@@ -10,14 +10,18 @@ export default {
       height: {
         "screen/90": "90vh",
         "screen/80": "80vh",
+        "screen/85": "85vh",
         "screen/50": "50vh",
-        "screen/60": "60vh",
+        "screen/70": "70vh", 
+        "screen/60": "60vh", 
+        "screen/65": "65vh",
         "screen/40": "40vh",
         "screen/35": "35vh",
             },
       width: {
         "screen/90": "90vw",
         "screen/80": "80vw",
+        "screen/85": "85vw",
         "screen/50": "50vw",
         "screen/60": "60vw",
         "screen/40": "40vw",
@@ -30,7 +34,11 @@ export default {
         "miracle-dr-blue": "#0d416b",
         "miracle-blue": "#00aae7",
         "miracle-black": "#232527",
-        "gridcolor":"#213547"
+        "gridcolor":"#213547",
+        "yellow":"yellow",
+        "red":"red",
+        "pink":"pink"
+
       },
       backgroundImage:
       {

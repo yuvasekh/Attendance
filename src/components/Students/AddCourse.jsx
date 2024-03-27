@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
+import { addcourses } from '../Services/api';
 
 const AddStudentCourseForm = ({ onSubmit }) => {
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
-    onSubmit(values);
-    form.resetFields();
+  const onFinish = async(values) => {
+  console.log(values)
+  try{
+    var res=await addcourses(values)
+    console.log(res,"status")
+      form.resetFields();
+      alert("added")
+  }
+  catch(error)
+  {
+alert("failed")
+  }
+ 
   };
 
   return (

@@ -6,6 +6,7 @@ import AttendanceTable from "../components/AttendanceRegister/AttendanceRegister
 import GetAttendance from "../components/AttendanceRegister/GetAttendance";
 import DashBoard from "../components/AttendanceRegister/DashBoard";
 import AddStudentCourseForm from "../components/Students/AddCourse";
+import StudentRegistrationForm from "../components/Students/StudentRegisteration";
 function AppRouter() {
 return(<div>
  <Routes>
@@ -16,6 +17,7 @@ return(<div>
  <Route path="/configuration" element={<Login />} />
  <Route path="/home" element={<LayoutApp />} />
  <Route path="/addcourse" element={<AddStudentCourseForm />} />
+ <Route path="/studentregistration" element={<StudentRegistrationForm />} />
  </Route>
  <Route path="*" element={<Navigate replace to="/login" />} />
 
