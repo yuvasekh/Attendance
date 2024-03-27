@@ -24,5 +24,6 @@ router.use((req, res, next) => {
 
 // Define Azure Function routes
 require("./azurefunctionsapi.routers")(router);
+require("./attendance.router")(router);
 
 module.exports = router;

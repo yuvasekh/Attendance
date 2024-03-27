@@ -6,6 +6,13 @@ const cors=require('cors')
 app.use("/api", apirouter);
 app.use(cors())
 port=8001
+
+
+// Test the connection
+
+
+
+
 var server = app.listen(port, function () {
     var host = server.address().address;
   
