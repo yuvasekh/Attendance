@@ -1,28 +1,68 @@
-import React, { useState } from 'react';
-import { Table, Radio } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Table, Radio, Select, Button } from 'antd';
+import { getstudentsFilter } from '../Services/api';
+
+const { Option } = Select;
 
 const AttendanceTable = ({ data }) => {
-  const [attendance, setAttendance] = useState([
-    { id: 1, name: 'Student 1', status: 'present' },
-    { id: 2, name: 'Student 2', status: 'absent' },
-    // Add more student data as needed
-  ]);
+  const [students, setStudents] = useState([]);
+  const [semester, setSemester] = useState('');
+  
+  useEffect(() => {
+    fetchStudents();
+  }, [semester]);
+
+  const fetchStudents = async () => {
+    try {
+      let filterData = { degree: "B.Tech", course: "Computer Science", semester: semester };
+      const res = await getstudentsFilter(filterData);
+      console.log(res, "filter"); // Check response from API
+      setStudents(res);
+    } catch (error) {
+      console.error('Error fetching students:', error);
+    }
+  };
 
   const handleAttendanceChange = (e, studentId) => {
-    const updatedAttendance = attendance.map(student => {
+    const updatedAttendance = students.map(student => {
       if (student.id === studentId) {
         return { ...student, status: e.target.value };
       }
       return student;
     });
-    setAttendance(updatedAttendance);
+    setStudents(updatedAttendance);
+  };
+
+  const handleSemesterChange = (value) => {
+    setSemester(value);
+  };
+
+  const handleSubmit = async () => {
+    // You can implement the logic for submitting attendance here
+    students["semister"]=semester
+    console.log('Attendance Submitted:', students);
   };
 
   const columns = [
     {
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
       title: 'Student Name',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'fullName',
+      key: 'fullName',
+    },
+    {
+      title: 'Degree',
+      dataIndex: 'degree',
+      key: 'degree',
+    },
+    {
+      title: 'Course',
+      dataIndex: 'course',
+      key: 'course',
     },
     {
       title: 'Attendance',
@@ -38,13 +78,23 @@ const AttendanceTable = ({ data }) => {
   ];
 
   return (
-    <Table
-      dataSource={attendance}
-      columns={columns}
-      pagination={false}
-      bordered
-      responsive
-    />
+    <div>
+      <Select style={{ width: 200, marginBottom: 16 }} onChange={handleSemesterChange} placeholder="Select Semester">
+        <Option value="semester1">Semester 1</Option>
+        <Option value="semester2">Semester 2</Option>
+        {/* Add more options for different semesters */}
+      </Select>
+      <Table
+        dataSource={students}
+        columns={columns}
+        pagination={false}
+        bordered
+        responsive
+      />
+      <Button type="primary" onClick={handleSubmit} style={{ marginTop: 16 }}>
+        Submit Attendance
+      </Button>
+    </div>
   );
 };
 

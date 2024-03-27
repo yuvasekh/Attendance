@@ -13,11 +13,11 @@ export async function addcourses(data) {
       });
     return temp[0];
   }
-  export async function getcoures(data) {
-    console.log(daat);
+  export async function getcoures() {
+  
     let temp = [];
     await axios
-      .get(`${rootUrl}api/courses`, { content: daat })
+      .get(`${rootUrl}api/courses`)
       .then((response) => {
         temp.push(response.data);
       })
@@ -31,6 +31,32 @@ export async function addcourses(data) {
     let temp = [];
     await axios
       .post(`${rootUrl}api/student`, { content: data })
+      .then((response) => {
+        temp.push(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
+    return temp[0];
+  }
+  export async function getstudentsFilter(data) {
+    console.log(data);
+    let temp = [];
+    await axios
+      .post(`${rootUrl}api/getstudentsFilter`, { content: data })
+      .then((response) => {
+        temp.push(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
+    return temp[0];
+  }
+  export async function getstudents() {
+  
+    let temp = [];
+    await axios
+      .get(`${rootUrl}api/student`)
       .then((response) => {
         temp.push(response.data);
       })
