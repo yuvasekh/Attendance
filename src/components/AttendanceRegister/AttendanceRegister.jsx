@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Radio, Select, Button } from 'antd';
-import { getstudentsFilter } from '../Services/api';
+import { addattendance, getstudentsFilter } from '../Services/api';
 
 const { Option } = Select;
 
@@ -39,7 +39,15 @@ const AttendanceTable = ({ data }) => {
 
   const handleSubmit = async () => {
     // You can implement the logic for submitting attendance here
-    students["semister"]=semester
+    // students["semister"]=semester
+    // let data=
+  
+    console.log(res)
+    let temp=students
+    temp.forEach(student => {
+        student.semester = 1;
+    });
+    var res=await addattendance(temp[0])
     console.log('Attendance Submitted:', students);
   };
 

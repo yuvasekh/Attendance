@@ -64,4 +64,18 @@ export async function addcourses(data) {
         console.error("Error:", error.message);
       });
     return temp[0];
+  } 
+  export async function addattendance(data) {
+    console.log(data);
+    let temp = [];
+    await axios
+      .post(`${rootUrl}api/attendance`, { content: data })
+      .then((response) => {
+        temp.push(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
+    return temp[0];
   }
+  
