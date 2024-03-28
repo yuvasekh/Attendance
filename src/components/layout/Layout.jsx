@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from '@ant-design/icons';
+import { BookOpenText, GraduationCap, LayoutDashboard, NotebookPen, Search, User, UserCheck, UserPlus } from 'lucide-react';
 import PropTypes from "prop-types";
-import { Layout, Menu, Button, theme } from 'antd';
+import { Layout, Menu, Button, theme, Dropdown, Avatar } from 'antd';
 import {  Drawer, Radio, Space } from 'antd';
-import { Route, Routes, Navigate,Link } from "react-router-dom";
-import Login from '../login/login';
+import { Route, Routes, Navigate,Link,useNavigate } from "react-router-dom";
 import { MenuIcon } from 'lucide-react';
+import jwt_decode from "jwt-decode";
+import { connect,useDispatch } from 'react-redux';
+import { increment, decrement,loginuser,logoutuser,roleset } from '../ReduxStore/actions'
+import { UserOutlined } from '@ant-design/icons';
+
 const { Header, Sider, Content } = Layout;
-const LayoutApp = ({ children }) => {
+const LayoutApp = ({ children, isAuthenticated,role }) => {
+  const navigate=useNavigate()
+  let info
   console.log("called")
+  console.log(localStorage.getItem('token'),"layout")
+  if(!localStorage.getItem('token'))
+  {
+navigate('/login')
+  }
+  else
+  {
+     info = jwt_decode(localStorage.getItem('token'));
+    console.log(info,"checkdata")
+
+  }
+
+
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -30,6 +43,25 @@ const LayoutApp = ({ children }) => {
   const onChange = (e) => {
     setPlacement(e.target.value);
   };
+  const logout=(()=>
+  {
+    localStorage.clear();
+    // dispatch(logoutuser())
+    navigate('/login')
+  
+
+  })
+  const items = [
+  
+    {
+      key: "1",
+      label: (
+        <div className="flex  items-center gap-2 p-1" onClick={logout}>
+          <div className="text-sm font-semibold">Logout</div>
+        </div>
+      ),
+    },
+  ];
   return (
     <Layout>
    <Drawer
@@ -43,79 +75,148 @@ const LayoutApp = ({ children }) => {
         width={500}
         style={{width:'70vw'}}
       >
+        
         <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: '1',
-              icon: <UserOutlined />,
-              label: 'nav 1',
-            },
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label: 'nav 2',
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
-            },
-          ]}
-        />
-      </Drawer>
-      <Sider trigger={null} collapsible collapsed={collapsed} className={!collapsed ? " hidden sm:hidden md:flex md:bg-gridcolor"  : "hidden sm:hidden md:hidden lg:hidden"}>
-
-        <div className="demo-logo-vertical" />
-        <Menu
-  theme="dark"
+  theme="#213547"
+  style={{color:'white',height:'100vh'}}
   mode="inline"
   defaultSelectedKeys={['1']}
+ 
   items={[
     {
+      key: '3',
+      icon:<LayoutDashboard />,
+      label: <Link to="/">Dashboard</Link>,
+    },
+    {
       key: '1',
-      icon: <UserOutlined />,
+      icon: <BookOpenText />,
       label: <Link to="/get">Attendance</Link>,
     },
     {
       key: '2',
-      icon: <VideoCameraOutlined />,
+      icon: <NotebookPen />,
       label: <Link to="/attendance">Attendance Register</Link>,
     },
-    {
-      key: '3',
-      icon: <UploadOutlined />,
-      label: <Link to="/">Dashboard</Link>,
-    },
+  
     {
       key: '4',
-      icon: <UploadOutlined />,
+      icon: <NotebookPen />,
       label: <Link to="/addcourse">Add Course</Link>,
     },
     {
       key: '5',
-      icon: <UploadOutlined />,
+      icon: <GraduationCap />,
       label: <Link to="/studentsList">Students List</Link>,
     },
-    {
-      key: '6',
-      icon: <UploadOutlined />,
-      label: <Link to="/selectcourse">Select Course</Link>,
-    },
+    // {
+    //   key: '6',
+    //   icon: <UploadOutlined />,
+    //   label: <Link to="/selectcourse">Select Course</Link>,
+    // },
     {
       key: '7',
-      icon: <UploadOutlined />,
+      icon: <BookOpenText />,
       label: <Link to="/coursesList">Courses List</Link>,
     },
     {
       key: '8',
-      icon: <UploadOutlined />,
+      icon: <UserPlus />,
       label: <Link to="/studentregistration">Student Registration</Link>,
     },
   ]}
 />
+      </Drawer>
+      <Sider trigger={null} collapsible collapsed={collapsed} className={!collapsed ? " hidden sm:hidden md:flex md:bg-gridcolor md:h-screen lg:bg-gridcolor lg:h-screen"  : "hidden sm:hidden md:hidden lg:hidden"}>
+
+        <div className="demo-logo-vertical" />
+        {
+       info && info.role=="admin"?     <Menu
+          theme="#213547"
+          style={{color:'white',height:'100vh'}}
+          mode="inline"
+          defaultSelectedKeys={['1']}
+         
+          items={[
+            {
+              key: '3',
+              icon:<LayoutDashboard />,
+              label: <Link to="/">Dashboard</Link>,
+            },
+            {
+              key: '1',
+              icon: <BookOpenText />,
+              label: <Link to="/get">Attendance</Link>,
+            },
+            {
+              key: '2',
+              icon: <NotebookPen />,
+              label: <Link to="/selectcourse">Attendance Register</Link>,
+            },
+          
+            {
+              key: '4',
+              icon: <NotebookPen />,
+              label: <Link to="/addcourse">Add Course</Link>,
+            },
+            {
+              key: '5',
+              icon: <GraduationCap />,
+              label: <Link to="/studentsList">Students List</Link>,
+            },
+            // {
+            //   key: '6',
+            //   icon: <UploadOutlined />,
+            //   label: <Link to="/selectcourse">Select Course</Link>,
+            // },
+            {
+              key: '7',
+              icon: <BookOpenText />,
+              label: <Link to="/coursesList">Courses List</Link>,
+            },
+            {
+              key: '8',
+              icon: <UserPlus />,
+              label: <Link to="/studentregistration">Student Registration</Link>,
+            },
+          ]}
+        />:     <Menu
+        theme="#213547"
+        style={{color:'white',height:'100vh'}}
+        mode="inline"
+        defaultSelectedKeys={['1']}
+       
+        items={[
+         
+      
+       
+        
+          
+          // {
+          //   key: '6',
+          //   icon: <UploadOutlined />,
+          //   label: <Link to="/selectcourse">Select Course</Link>,
+          // },
+          {
+            key: '1',
+            icon: <BookOpenText />,
+            label: <Link to="/get">Attendance</Link>,
+          },
+          {
+            key: '7',
+            icon: <BookOpenText />,
+            label: <Link to="/coursesList">Courses List</Link>,
+          },
+          {
+            key: '8',
+            icon: <User />,
+            label: <Link to="/details">Details</Link>,
+          },
+     
+        ]}
+      />
+        }
+   
 
       </Sider>
       <Layout>
@@ -127,7 +228,7 @@ const LayoutApp = ({ children }) => {
       
 
         >
-            <div className='flex justify-start items-center text-[white] font-medium text-lg gap-[20px] sm:gap-[450px] md:gap-[250px] lg:gap-[250px]'>
+            <div className='flex justify-start items-center text-[white] font-medium text-lg gap-[5px] sm:gap-[450px] md:gap-[250px] lg:gap-[250px] lg:w-screen md:w-screen'>
            
           <Button
             type="text"
@@ -135,8 +236,8 @@ const LayoutApp = ({ children }) => {
             onClick={() => setCollapsed(!collapsed)}
             style={{
               fontSize: '16px',
-              width: 44,
-              height: 44,
+              width: 33,
+              height: 33,
               alignItems:'center',
               alignContent:'center',
               float:'left',
@@ -146,9 +247,7 @@ background:'white'
           ></Button>
           
             <Button type="primary" onClick={showDrawer}    style={{
-              fontSize: '16px',
-              width: 44,
-              height: 44,
+              
               alignItems:'center',
               alignContent:'center',
               float:'left',
@@ -160,7 +259,25 @@ color:'black'
         </Button>
         
 
-<h1 style={{textAlign:'center '}}>Student Attendance ManageMent System</h1>
+<span style={{textAlign:'center '}} className='text-sm md:text-lg lg:text-lg'>Student Attendance ManageMent System</span>
+<Dropdown 
+              menu={{ items }}
+              placement="bottom"
+              trigger={"click"}
+              arrow={{
+                pointAtCenter: true,
+              }}
+              className=" flex items-center justify-center cursor-pointer text-black bg-white sm:ml-[100px] md:ml-[330px] lg:ml-[350px]"
+            >
+             
+                 <Avatar
+              
+              
+             className='text-sm md:text-large'
+                icon={<UserOutlined />}
+              />
+             
+        </Dropdown>
             </div>
    
          

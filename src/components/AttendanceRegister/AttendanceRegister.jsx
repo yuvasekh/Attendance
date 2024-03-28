@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Radio, Select, Button } from 'antd';
+import { Table, Radio, Select, Button, DatePicker } from 'antd';
 import { addattendance, getstudentsFilter } from '../Services/api';
 
 const { Option } = Select;
+import { useParams } from 'react-router-dom';
 
 const AttendanceTable = ({ data }) => {
+  const { course, degree } = useParams();
+  console.log(course,degree,"useparams")
   const [students, setStudents] = useState([]);
   const [semester, setSemester] = useState('');
-  
+  const [attendanceDate, setAttendanceDate] = useState(null); // State for attendance date
+
   useEffect(() => {
     fetchStudents();
   }, [semester]);
 
   const fetchStudents = async () => {
     try {
-      let filterData = { degree: "B.Tech", course: "Computer Science", semester: semester };
+      let filterData = { degree: degree, course: course, semester: semester };
       const res = await getstudentsFilter(filterData);
       console.log(res, "filter"); // Check response from API
       setStudents(res);
@@ -37,26 +41,26 @@ const AttendanceTable = ({ data }) => {
     setSemester(value);
   };
 
+  const handleDateChange = (date) => {
+    setAttendanceDate(date);
+  };
+
   const handleSubmit = async () => {
-    // You can implement the logic for submitting attendance here
-    // students["semister"]=semester
-    // let data=
-  
-    console.log(res)
-    let temp=students
-    temp.forEach(student => {
-        if(semester=="semester1")
-        {
-            student.semester = 1;
-        }
-        else
-        {
-            student.semester = 2;
-        }
-        
-    });
-    var res=await addattendance(temp[0])
-    console.log('Attendance Submitted:', students);
+    // Prepare attendance data to be submitted
+    let attendanceData = students.map(student => ({
+      ...student,
+      semester: semester === "semester1" ? 1 : 2,
+      attendanceDate: attendanceDate.format("YYYY-MM-DD"), // Format date as needed
+    }));
+
+    try {
+      // Call API to add attendance
+      var res=await addattendance(attendanceData);
+      alert("Attendance submitted")
+      console.log('Attendance Submitted:', attendanceData);
+    } catch (error) {
+      console.error('Error submitting attendance:', error);
+    }
   };
 
   const columns = [
@@ -100,6 +104,7 @@ const AttendanceTable = ({ data }) => {
         <Option value="semester2">Semester 2</Option>
         {/* Add more options for different semesters */}
       </Select>
+      <DatePicker onChange={handleDateChange} style={{ marginBottom: 16 }} placeholder="Select Attendance Date" />
       <Table
         dataSource={students}
         columns={columns}
@@ -107,7 +112,7 @@ const AttendanceTable = ({ data }) => {
         bordered
         responsive
       />
-      <Button type="primary" onClick={handleSubmit} style={{ marginTop: 16 }}>
+      <Button type="primary" onClick={handleSubmit} style={{ marginTop: 16,float:'right',marginRight:100 }} className='bg-gridcolor'>
         Submit Attendance
       </Button>
     </div>

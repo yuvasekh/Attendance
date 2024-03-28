@@ -19,6 +19,7 @@ export default {
         "screen/35": "35vh",
             },
       width: {
+        "screen": "100vw",
         "screen/90": "90vw",
         "screen/80": "80vw",
         "screen/85": "85vw",
@@ -37,6 +38,7 @@ export default {
         "gridcolor":"#213547",
         "yellow":"yellow",
         "red":"red",
+        "white":"white",
         "pink":"pink"
 
       },

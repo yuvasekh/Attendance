@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const { Option } = Select;
 
-const CourseSlection = () => {
+const GetSelection = () => {
     const navigate=useNavigate()
   const [options, setOptions] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
@@ -27,7 +27,7 @@ const CourseSlection = () => {
   const onFinish = (values) => {
     console.log('Received values:', values);
     console.log(options[values.course-1],"options[12]")
-    navigate(`/students/${values.degree}/${options[values.course-1].courseName}`);
+    navigate(`/studentsattendance/${values.degree}/${options[values.course-1].courseName}`);
   };
 
   const handleDegreeChange = (value) => {
@@ -85,4 +85,4 @@ const CourseSlection = () => {
   );
 };
 
-export default CourseSlection;
+export default GetSelection;

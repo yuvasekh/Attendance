@@ -78,4 +78,29 @@ export async function addcourses(data) {
       });
     return temp[0];
   }
-  
+  export async function getAttendanceFilter(data) {
+    console.log(data);
+    let temp = [];
+    await axios
+      .post(`${rootUrl}api/getAttendanceFilter`, { content: data })
+      .then((response) => {
+        temp.push(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
+    return temp[0];
+  }
+  export async function login(data) {
+    console.log(data);
+    let temp = [];
+    await axios
+      .post(`${rootUrl}api/login`, { content: data })
+      .then((response) => {
+        temp.push(response);
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
+    return temp[0];
+  }
